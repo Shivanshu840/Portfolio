@@ -1,15 +1,15 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import Image from "next/image"
 import { Github, Mail, Linkedin, Twitter, Medal } from "lucide-react"
 import { Badge } from "./components/utils/badge"
 import { Button } from "./components/utils/button"
 import Link from "next/link"
 import type React from "react"
-import medimeeet from "../public/medimeet.png"
 
 export default function Page() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const aboutRef = useRef<HTMLElement>(null)
   const experienceRef = useRef<HTMLElement>(null)
   const projectsRef = useRef<HTMLElement>(null)
@@ -17,16 +17,50 @@ export default function Page() {
 
   const scrollToSection = (ref: React.RefObject<HTMLElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth" })
+    setIsMenuOpen(false)
   }
 
   return (
-    <div className="flex min-h-screen bg-[#0a0d16]">
-      {/* Left Sidebar - Fixed */}
-      <aside className="fixed w-[450px] h-screen p-12 flex flex-col text-white">
+    <div className="flex min-h-screen bg-[#0a0d16] relative">
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden fixed top-4 right-4 z-50 text-white p-2 bg-[#0f1624] rounded-md"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          {isMenuOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
+      </button>
+
+      {/* Overlay for mobile menu */}
+      {isMenuOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+
+      {/* Left Sidebar */}
+      <aside className={`
+        fixed w-[450px] h-screen p-12 flex flex-col text-white bg-[#0a0d16] z-40
+        transform transition-transform duration-300 ease-in-out
+        md:transform-none
+        ${isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
         <div className="space-y-4">
           <h1 className="text-4xl font-bold">Shivanshu Jaiswal</h1>
           <p className="text-1xl font-semibold">
-            Computer Science Engineering Student at <br></br>Lovely Professional University, Punjab
+            Computer Science Engineering Student at <br />
+            Lovely Professional University, Punjab
           </p>
         </div>
 
@@ -62,17 +96,65 @@ export default function Page() {
         </nav>
 
         <div className="mt-auto flex space-x-4">
-          {[Github, Mail, Linkedin, Twitter, Medal].map((Icon, i) => (
-            <Button key={i} variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-              <Icon className="h-5 w-5" />
-            </Button>
-          ))}
-        </div>
-      </aside>
+  <Link href="https://github.com/Shivanshu840" target="_blank" rel="noopener noreferrer">
+    <Button
+      variant="ghost"
+      size="icon"
+      className="text-gray-400 hover:text-white"
+    >
+      <Github className="h-5 w-5" />
+    </Button>
+  </Link>
 
-      {/* Right Content - Scrollable */}
-      <main className="ml-[650px] flex-1 p-12 text-white max-w-[1200px]">
-        <section ref={aboutRef} className="mb-32">
+  <Link href="mailto:rajshivanshu544@gmail.com">
+    <Button
+      variant="ghost"
+      size="icon"
+      className="text-gray-400 hover:text-white"
+    >
+      <Mail className="h-5 w-5" />
+    </Button>
+  </Link>
+
+  <Link href="https://www.linkedin.com/in/shivanshu-raj-aa2234250/" target="_blank" rel="noopener noreferrer">
+    <Button
+      variant="ghost"
+      size="icon"
+      className="text-gray-400 hover:text-white"
+    >
+      <Linkedin className="h-5 w-5" />
+    </Button>
+  </Link>
+
+  <Link href="https://x.com/ShivanshuR49080" target="_blank" rel="noopener noreferrer">
+    <Button
+      variant="ghost"
+      size="icon"
+      className="text-gray-400 hover:text-white"
+    >
+      <Twitter className="h-5 w-5" />
+    </Button>
+  </Link>
+
+  <Link href="https://yourportfolio.com/achievements" target="_blank" rel="noopener noreferrer">
+    <Button
+      variant="ghost"
+      size="icon"
+      className="text-gray-400 hover:text-white"
+    >
+      <Medal className="h-5 w-5" />
+    </Button>
+  </Link>
+</div>
+      </aside>
+            {/* Main Content */}
+            <main className={`
+        ml-0 md:ml-[650px] flex-1 p-6 md:p-12 text-white max-w-[1200px]
+        transition-all duration-300 ease-in-out
+        ${isMenuOpen ? 'blur-sm md:blur-none' : ''}
+      `}>
+        {/* About Section */}
+        <section ref={aboutRef} className="mb-16 md:mb-32">
           <h2 className="text-xl font-semibold mb-6">ABOUT</h2>
           <div className="space-y-4 text-gray-300 leading-relaxed">
             <p>
@@ -94,11 +176,12 @@ export default function Page() {
           </div>
         </section>
 
-        <section ref={experienceRef} className="mb-32">
+        {/* Experience Section */}
+        <section ref={experienceRef} className="mb-16 md:mb-32">
           <h2 className="text-xl font-semibold mb-6">EXPERIENCE</h2>
           <div className="space-y-8">
-            <div className="rounded-lg bg-[#0f1624] p-6">
-              <div className="flex justify-between items-start mb-4">
+            <div className="rounded-lg bg-[#0f1624] p-4 md:p-6">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4 gap-2">
                 <div>
                   <h3 className="text-lg font-semibold flex items-center gap-2">
                     Soul AI
@@ -126,7 +209,11 @@ export default function Page() {
               </p>
               <div className="flex flex-wrap gap-2">
                 {["React Native", "React", "Web3", "TeamWork"].map((tech) => (
-                  <Badge key={tech} variant="secondary" className="bg-[#193049] text-[#4fd1c5] hover:bg-[#234567]">
+                  <Badge
+                    key={tech}
+                    variant="secondary"
+                    className="bg-[#193049] text-[#4fd1c5] hover:bg-[#234567] text-xs md:text-sm"
+                  >
                     {tech}
                   </Badge>
                 ))}
@@ -135,22 +222,23 @@ export default function Page() {
           </div>
         </section>
 
-        <section ref={projectsRef} className="mb-32">
+        {/* Projects Section */}
+        <section ref={projectsRef} className="mb-16 md:mb-32">
           <h2 className="text-xl font-semibold mb-6">PROJECTS</h2>
           <div className="space-y-8">
             {projects.map((project) => (
-              <div key={project.title} className="rounded-lg bg-[#0f1624] p-8 space-y-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex gap-4">
+              <div key={project.title} className="rounded-lg bg-[#0f1624] p-4 md:p-8 space-y-4">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                  <div className="flex flex-col md:flex-row gap-4">
                     <Image
                       src={project.image || "/placeholder.svg"}
                       alt={project.title}
                       width={80}
                       height={80}
-                      className="rounded-lg"
+                      className="rounded-lg w-full md:w-auto max-w-[200px] object-cover"
                     />
                     <div>
-                      <h3 className="text-lg font-semibold flex items-center  gap-2">
+                      <h3 className="text-lg font-semibold flex items-center text-[#4fd1c5] gap-2">
                         {project.title}
                         <Link href="https://medi-meet-web.vercel.app/" className="text-gray-400 hover:text-white">
                           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -163,14 +251,18 @@ export default function Page() {
                           </svg>
                         </Link>
                       </h3>
-                      <p className="text-gray-400 mt-2">{project.description}</p>
+                      <p className="text-gray-400 mt-2 text-sm md:text-base">{project.description}</p>
                     </div>
                   </div>
-                  <span className="text-gray-400">{project.date}</span>
+                  <span className="text-gray-400 text-sm">{project.date}</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
-                    <Badge key={tech} variant="secondary" className="bg-[#193049] text-[#4fd1c5] hover:bg-[#234567]">
+                    <Badge
+                      key={tech}
+                      variant="secondary"
+                      className="bg-[#193049] text-[#4fd1c5] hover:bg-[#234567] text-xs md:text-sm"
+                    >
                       {tech}
                     </Badge>
                   ))}
@@ -179,12 +271,16 @@ export default function Page() {
             ))}
           </div>
         </section>
-
-        <section ref={skillsRef} className="mb-32">
+                {/* Skills Section */}
+                <section ref={skillsRef} className="mb-16 md:mb-32">
           <h2 className="text-xl font-semibold mb-6">TECHNICAL SKILLS</h2>
           <div className="flex flex-wrap gap-2">
             {skills.map((skill) => (
-              <Badge key={skill} variant="secondary" className="bg-[#193049] text-[#4fd1c5] hover:bg-[#234567]">
+              <Badge
+                key={skill}
+                variant="secondary"
+                className="bg-[#193049] text-[#4fd1c5] hover:bg-[#234567] text-xs md:text-sm"
+              >
                 {skill}
               </Badge>
             ))}
@@ -201,7 +297,7 @@ const projects = [
     description:
       "Revolutionizing healthcare through our secure telemedicine platform, connecting patients with certified healthcare professionals via video consultations. We eliminate geographical barriers and reduce wait times, making quality medical care accessible from the comfort of home while maintaining the highest standards of security and confidentiality.",
     date: "DEC 2024",
-    image: "/medimeet.png?height=50&width=80",
+    image: "/medimeet.png",
     technologies: [
       "Typescript",
       "Node.js",
@@ -223,10 +319,9 @@ const projects = [
     description:
       "Led development of this disaster management mobile app, implementing critical features like resource requests, admin dashboard, SOS button, and dynamic heatmaps, as the sole app developer.",
     date: "Sept. 2023",
-    image: "/placeholder.svg?height=80&width=80",
+    image: "/placeholder.svg",
     technologies: ["React Native", "Firebase", "Tensorflow", "Leadership"],
   },
-  // Add more projects as needed
 ]
 
 const skills = [
@@ -237,14 +332,11 @@ const skills = [
   "Python",
   "React.js",
   "Next.js",
-  "t3 Stack",
-  "Nest.js",
   "React Native",
   "Node.js",
   "Express.js",
   "MongoDB",
   "Prisma",
-  "Drizzle",
   "MySQL",
   "PostgreSQL",
   "Tailwind CSS",
@@ -253,11 +345,7 @@ const skills = [
   "Docker",
   "Redis",
   "AWS-EC2",
-  "AWS Lambda",
   "AWS S3",
-  "Supabase",
-  "Firebase",
   "Postman",
   "SEO",
 ]
-
