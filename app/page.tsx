@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import Image from "next/image"
-import { Github, Mail, Linkedin, Twitter, Medal } from "lucide-react"
+import { Github, Mail, Linkedin, Twitter} from "lucide-react"
 import { Badge } from "./components/utils/badge"
 import { Button } from "./components/utils/button"
 import Link from "next/link"
