@@ -135,16 +135,6 @@ export default function Page() {
       <Twitter className="h-5 w-5" />
     </Button>
   </Link>
-
-  <Link href="https://yourportfolio.com/achievements" target="_blank" rel="noopener noreferrer">
-    <Button
-      variant="ghost"
-      size="icon"
-      className="text-gray-400 hover:text-white"
-    >
-      <Medal className="h-5 w-5" />
-    </Button>
-  </Link>
 </div>
       </aside>
             {/* Main Content */}
@@ -240,7 +230,7 @@ export default function Page() {
                     <div>
                       <h3 className="text-lg font-semibold flex items-center text-[#4fd1c5] gap-2">
                         {project.title}
-                        <Link href="https://medi-meet-web.vercel.app/" className="text-gray-400 hover:text-white">
+                        <Link href = {project.weburl} className="text-gray-400 hover:text-white">
                           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path
                               strokeLinecap="round"
@@ -297,7 +287,7 @@ const projects = [
     description:
       "Revolutionizing healthcare through our secure telemedicine platform, connecting patients with certified healthcare professionals via video consultations. We eliminate geographical barriers and reduce wait times, making quality medical care accessible from the comfort of home while maintaining the highest standards of security and confidentiality.",
     date: "DEC 2024",
-    image: "/medimeet.png",
+    image: "/medimeet2.jpg",
     technologies: [
       "Typescript",
       "Node.js",
@@ -313,14 +303,23 @@ const projects = [
       "TurboRepo",
       "Messaging Queues",
     ],
+    weburl: "https://medi-meet-web.vercel.app/"
   },
   {
-    title: "HospitEase",
+    title: "UserManagement",
     description:
-      "Led development of this disaster management mobile app, implementing critical features like resource requests, admin dashboard, SOS button, and dynamic heatmaps, as the sole app developer.",
+      "The User Management System is a comprehensive application designed to streamline the management of user accounts. This project provides a robust set of features to handle user registration, authentication, profile management, and more.",
     date: "Sept. 2023",
-    image: "/placeholder.svg",
-    technologies: ["React Native", "Firebase", "Tensorflow", "Leadership"],
+    image: "/usermanagement.jpg",
+    technologies: [
+       "React",
+       "Javascript",
+       "Node.js",
+       "Express.js",
+       "Authentication",
+       "MongoDb",
+      ],
+      weburl: "user-management-chi-teal.vercel.app"
   },
 ]
 
@@ -333,6 +332,11 @@ const skills = [
   "React.js",
   "Next.js",
   "React Native",
+  "Unit-Testing",
+  "Integration-Testing",
+  "End-to-End Testing",
+  "Horizontal Scaling",
+  "Vertical Scaling",
   "Node.js",
   "Express.js",
   "MongoDB",
