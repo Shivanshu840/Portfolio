@@ -10,10 +10,10 @@ import type React from "react"
 
 export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const aboutRef = useRef<HTMLElement>(null)
-  const experienceRef = useRef<HTMLElement>(null)
-  const projectsRef = useRef<HTMLElement>(null)
-  const skillsRef = useRef<HTMLElement>(null)
+  const aboutRef = useRef<HTMLElement>(null!)
+  const experienceRef = useRef<HTMLElement>(null!)
+  const projectsRef = useRef<HTMLElement>(null!)
+  const skillsRef = useRef<HTMLElement>(null!)
 
   const scrollToSection = (ref: React.RefObject<HTMLElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth" })
